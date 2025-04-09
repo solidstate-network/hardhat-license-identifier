@@ -12,7 +12,7 @@ export default async (): Promise<Partial<ConfigHooks>> => ({
   resolveUserConfig: async (userConfig, resolveConfigurationVariable, next) => {
     return {
       ...(await next(userConfig, resolveConfigurationVariable)),
-      contractSizer: {
+      spdxLicenseIdentifier: {
         ...DEFAULT_CONFIG,
         ...userConfig.spdxLicenseIdentifier,
       },
