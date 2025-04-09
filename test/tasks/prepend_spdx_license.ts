@@ -1,27 +1,35 @@
-import { license } from '../../package.json';
+import pkg from '../../package.json';
 import { expect } from 'chai';
 import fs from 'fs';
 import hre from 'hardhat';
-import { TASK_COMPILE_SOLIDITY_GET_SOURCE_PATHS } from 'hardhat/builtin-tasks/task-names';
+import path from 'path';
 
 const TASK_PREPEND_SPDX_LICENSE = 'prepend-spdx-license';
 const HEADER_BASE = '// SPDX-License-Identifier:';
 
 const readContractSource = async (name: string) => {
   const artifact = await hre.artifacts.readArtifact(name);
-  return fs.readFileSync(artifact.sourceName).toString();
+  return await fs.promises.readFile(artifact.sourceName, 'utf-8');
 };
 
 describe(TASK_PREPEND_SPDX_LICENSE, () => {
   const cache: { [sourcePath: string]: string } = {};
 
   before(async () => {
-    const sourcePaths: string[] = await hre.run(
-      TASK_COMPILE_SOLIDITY_GET_SOURCE_PATHS,
-    );
+    // TODO: read sources path(s) from hre.config.paths.sources
+    const sourcesDirectory = path.resolve(hre.config.paths.root, 'contracts');
+
+    const sourcePaths = (
+      await fs.promises.readdir(sourcesDirectory, {
+        recursive: true,
+        withFileTypes: true,
+      })
+    )
+      .filter((dirent) => dirent.isFile())
+      .map((dirent) => path.resolve(dirent.parentPath, dirent.name));
 
     for (const sourcePath of sourcePaths) {
-      cache[sourcePath] = fs.readFileSync(sourcePath).toString();
+      cache[sourcePath] = await fs.promises.readFile(sourcePath, 'utf-8');
     }
   });
 
@@ -35,10 +43,10 @@ describe(TASK_PREPEND_SPDX_LICENSE, () => {
     const contentsBefore = await readContractSource('ContractWithoutLicense');
     expect(contentsBefore.includes(HEADER_BASE)).to.be.false;
 
-    await hre.run(TASK_PREPEND_SPDX_LICENSE);
+    await hre.tasks.getTask(TASK_PREPEND_SPDX_LICENSE).run();
 
     const contentsAfter = await readContractSource('ContractWithoutLicense');
-    expect(contentsAfter.includes(`${HEADER_BASE} ${license}`)).to.be.true;
+    expect(contentsAfter.includes(`${HEADER_BASE} ${pkg.license}`)).to.be.true;
   });
 
   it('does not write duplicate license identifiers', async () => {
@@ -47,7 +55,7 @@ describe(TASK_PREPEND_SPDX_LICENSE, () => {
     const contentsBefore = await readContractSource('ContractWithLicense');
     expect((contentsBefore.match(reg) ?? []).length).to.equal(1);
 
-    await hre.run(TASK_PREPEND_SPDX_LICENSE);
+    await hre.tasks.getTask(TASK_PREPEND_SPDX_LICENSE).run();
 
     const contentsAfter = await readContractSource('ContractWithLicense');
     expect((contentsAfter.match(reg) ?? []).length).to.equal(1);
