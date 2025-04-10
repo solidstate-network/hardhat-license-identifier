@@ -23,15 +23,10 @@ export const prependSpdxLicense = async (hre: HardhatRuntimeEnvironment) => {
 
   let count = 0;
 
-  // TODO: find equivalent to TASK_COMPILE_SOLIDITY_GET_SOURCE_PATHS
-  // or filter out dependencies right away
-  const fullNames = Array.from(await hre.artifacts.getAllFullyQualifiedNames());
+  const sourcePaths = await hre.solidity.getRootFilePaths();
 
   await Promise.all(
-    fullNames.map(async (fullName) => {
-      const artifact = await hre.artifacts.readArtifact(fullName);
-      const sourcePath = artifact.sourceName;
-
+    sourcePaths.map(async (sourcePath) => {
       if (config.only.length && !config.only.some((m) => sourcePath.match(m)))
         return;
       if (
@@ -51,7 +46,11 @@ export const prependSpdxLicense = async (hre: HardhatRuntimeEnvironment) => {
 
       const padding = partialMatch ? '' : '\n';
 
-      fs.writeFileSync(sourcePath, content.replace(regexp, header + padding));
+      await fs.promises.writeFile(
+        sourcePath,
+        content.replace(regexp, header + padding),
+      );
+
       count++;
     }),
   );
