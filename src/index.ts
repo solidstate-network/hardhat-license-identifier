@@ -9,7 +9,7 @@ const plugin: HardhatPlugin = {
   npmPackage: pkg.name!,
   tasks: [prependSpdxLicenseTask, compileTask],
   hookHandlers: {
-    config: import.meta.resolve('./hook_handlers/config.js'),
+    config: import.meta.resolve('./hooks/config.js'),
   },
 };
 
