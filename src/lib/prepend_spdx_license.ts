@@ -1,4 +1,4 @@
-import pkg from '../package.json';
+import pkg from '../../package.json';
 import fs from 'fs';
 import { HardhatPluginError } from 'hardhat/plugins';
 import { HardhatRuntimeEnvironment } from 'hardhat/types/hre';

@@ -1,4 +1,4 @@
-import { prependSpdxLicense } from '../logic.js';
+import { prependSpdxLicense } from '../lib/prepend_spdx_license.js';
 import { TaskOverrideActionFunction } from 'hardhat/types/tasks';
 
 const action: TaskOverrideActionFunction = async (args, hre, runSuper) => {

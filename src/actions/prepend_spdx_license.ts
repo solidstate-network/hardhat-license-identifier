@@ -1,4 +1,4 @@
-import { prependSpdxLicense } from '../logic.js';
+import { prependSpdxLicense } from '../lib/prepend_spdx_license.js';
 import { NewTaskActionFunction } from 'hardhat/types/tasks';
 
 const action: NewTaskActionFunction = async (args, hre) => {
