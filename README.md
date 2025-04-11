@@ -24,12 +24,13 @@ require('@solidstate/hardhat-spdx-license-identifier');
 
 Add configuration under the `spdxLicenseIdentifier` key:
 
-| option         | description                                                                                            | default |
-| -------------- | ------------------------------------------------------------------------------------------------------ | ------- |
-| `overwrite`    | whether to overwrite existing SPDX license identifiers                                                 | `false` |
-| `runOnCompile` | whether to automatically prepend identifiers during compilation                                        | `false` |
-| `only`         | `Array` of `String` matchers used to select included paths, defaults to all contracts if `length` is 0 | `[]`    |
-| `except`       | `Array` of `String` matchers used to exclude paths                                                     | `[]`    |
+| option         | description                                                                                            | default                           |
+| -------------- | ------------------------------------------------------------------------------------------------------ | --------------------------------- |
+| `license`      | SPDX license to add to source files                                                                    | `license` field of `package.json` |
+| `overwrite`    | whether to overwrite existing SPDX license identifiers                                                 | `false`                           |
+| `runOnCompile` | whether to automatically prepend identifiers during compilation                                        | `false`                           |
+| `only`         | `Array` of `String` matchers used to select included paths, defaults to all contracts if `length` is 0 | `[]`                              |
+| `except`       | `Array` of `String` matchers used to exclude paths                                                     | `[]`                              |
 
 ```javascript
 spdxLicenseIdentifier: {

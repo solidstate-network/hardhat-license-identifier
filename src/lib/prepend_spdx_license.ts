@@ -6,15 +6,19 @@ import { HardhatRuntimeEnvironment } from 'hardhat/types/hre';
 export const prependSpdxLicense = async (hre: HardhatRuntimeEnvironment) => {
   const config = hre.config.spdxLicenseIdentifier;
 
-  const { license } = JSON.parse(
-    fs.readFileSync(`${hre.config.paths.root}/package.json`, 'utf8'),
-  );
+  let { license } = config;
 
   if (!license) {
-    throw new HardhatPluginError(
-      pkg.name,
-      'no license specified in package.json, unable to add SPDX License Identifier to sources',
-    );
+    ({ license } = JSON.parse(
+      fs.readFileSync(`${hre.config.paths.root}/package.json`, 'utf8'),
+    ));
+
+    if (!license) {
+      throw new HardhatPluginError(
+        pkg.name,
+        'no license specified in config or package.json, unable to add SPDX License Identifier to sources',
+      );
+    }
   }
 
   const headerBase = '// SPDX-License-Identifier:';

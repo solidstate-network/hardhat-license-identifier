@@ -1,4 +1,5 @@
 export type SpdxLicenseIdentifierConfig = {
+  license?: string;
   overwrite: boolean;
   runOnCompile: boolean;
   only: string[];
