@@ -1,16 +1,18 @@
 import pkg from '../../package.json';
+import type { SpdxLicenseIdentifierConfig } from '../types.js';
 import fs from 'fs';
 import { HardhatPluginError } from 'hardhat/plugins';
-import { HardhatRuntimeEnvironment } from 'hardhat/types/hre';
 
-export const prependSpdxLicense = async (hre: HardhatRuntimeEnvironment) => {
-  const config = hre.config.spdxLicenseIdentifier;
-
+export const prependSpdxLicense = async (
+  config: SpdxLicenseIdentifierConfig,
+  sourcePaths: string[],
+  rootPath: string,
+) => {
   let { license } = config;
 
   if (!license) {
     ({ license } = JSON.parse(
-      fs.readFileSync(`${hre.config.paths.root}/package.json`, 'utf8'),
+      fs.readFileSync(`${rootPath}/package.json`, 'utf8'),
     ));
 
     if (!license) {
@@ -26,8 +28,6 @@ export const prependSpdxLicense = async (hre: HardhatRuntimeEnvironment) => {
   const header = `${headerBase} ${license}\n`;
 
   let count = 0;
-
-  const sourcePaths = await hre.solidity.getRootFilePaths();
 
   await Promise.all(
     sourcePaths.map(async (sourcePath) => {
