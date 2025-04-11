@@ -55,9 +55,7 @@ export const prependSpdxLicense = async (hre: HardhatRuntimeEnvironment) => {
     }),
   );
 
-  if (count > 0) {
-    console.log(
-      `Prepended SPDX License Identifier "${license}" to ${count} sources.`,
-    );
-  }
+  console.log(
+    `Prepended SPDX License Identifier "${license}" to ${count} sources.`,
+  );
 };
