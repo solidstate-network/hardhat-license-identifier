@@ -49,7 +49,6 @@ export const prependSpdxLicense = async (
 
   await Promise.all(
     sourcePaths.map(async (sourcePath) => {
-      // content is read from disk for preprocessor compatibility
       const content = await fs.promises.readFile(sourcePath, 'utf-8');
 
       const partialMatch = content.startsWith(headerBase);
