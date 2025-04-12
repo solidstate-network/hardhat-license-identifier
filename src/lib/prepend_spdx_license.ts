@@ -37,7 +37,7 @@ export const prependSpdxLicense = async (
   overwrite: boolean,
 ) => {
   const headerBase = '// SPDX-License-Identifier:';
-  const regexp = new RegExp(`(${headerBase}.*\n*)?`);
+  const regexp = new RegExp(`(${headerBase}.*\n)?`);
   const header = `${headerBase} ${license}\n`;
 
   let count = 0;
@@ -46,18 +46,10 @@ export const prependSpdxLicense = async (
     sourcePaths.map(async (sourcePath) => {
       const content = await fs.promises.readFile(sourcePath, 'utf-8');
 
-      const exactMatch = content.startsWith(header);
-      const partialMatch = content.startsWith(headerBase);
+      if (content.startsWith(header)) return;
+      if (content.startsWith(headerBase) && !overwrite) return;
 
-      if (exactMatch) return;
-      if (partialMatch && !overwrite) return;
-
-      const padding = partialMatch ? '' : '\n';
-
-      await fs.promises.writeFile(
-        sourcePath,
-        content.replace(regexp, header + padding),
-      );
+      await fs.promises.writeFile(sourcePath, content.replace(regexp, header));
 
       count++;
     }),
