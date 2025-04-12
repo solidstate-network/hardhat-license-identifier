@@ -32,15 +32,10 @@ export const filterSourcePaths = (
 };
 
 export const prependSpdxLicense = async (
-  config: SpdxLicenseIdentifierConfig,
   sourcePaths: string[],
-  rootPath: string,
+  license: string,
+  overwrite: boolean,
 ) => {
-  const license = config.license ?? readLicense(rootPath);
-  const { overwrite } = config;
-
-  sourcePaths = filterSourcePaths(config, sourcePaths);
-
   const headerBase = '// SPDX-License-Identifier:';
   const regexp = new RegExp(`(${headerBase}.*\n*)?`);
   const header = `${headerBase} ${license}\n`;
@@ -51,8 +46,8 @@ export const prependSpdxLicense = async (
     sourcePaths.map(async (sourcePath) => {
       const content = await fs.promises.readFile(sourcePath, 'utf-8');
 
-      const partialMatch = content.startsWith(headerBase);
       const exactMatch = content.startsWith(header);
+      const partialMatch = content.startsWith(headerBase);
 
       if (exactMatch) return;
       if (partialMatch && !overwrite) return;
