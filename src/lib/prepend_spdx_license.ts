@@ -3,25 +3,43 @@ import type { SpdxLicenseIdentifierConfig } from '../types.js';
 import fs from 'fs';
 import { HardhatPluginError } from 'hardhat/plugins';
 
+export const readLicense = (rootPath: string) => {
+  const license: string = JSON.parse(
+    fs.readFileSync(`${rootPath}/package.json`, 'utf8'),
+  ).license;
+
+  if (!license) {
+    throw new HardhatPluginError(
+      pkg.name,
+      'no license specified in config or package.json, unable to add SPDX License Identifier to sources',
+    );
+  }
+
+  return license;
+};
+
+export const filterSourcePaths = (
+  config: SpdxLicenseIdentifierConfig,
+  sourcePaths: string[],
+) => {
+  return sourcePaths.filter((sourcePath) => {
+    if (config.only.length && !config.only.some((m) => sourcePath.match(m)))
+      return false;
+    if (config.except.length && config.except.some((m) => sourcePath.match(m)))
+      return false;
+    return true;
+  });
+};
+
 export const prependSpdxLicense = async (
   config: SpdxLicenseIdentifierConfig,
   sourcePaths: string[],
   rootPath: string,
 ) => {
-  let { license } = config;
+  const license = config.license ?? readLicense(rootPath);
+  const { overwrite } = config;
 
-  if (!license) {
-    ({ license } = JSON.parse(
-      fs.readFileSync(`${rootPath}/package.json`, 'utf8'),
-    ));
-
-    if (!license) {
-      throw new HardhatPluginError(
-        pkg.name,
-        'no license specified in config or package.json, unable to add SPDX License Identifier to sources',
-      );
-    }
-  }
+  sourcePaths = filterSourcePaths(config, sourcePaths);
 
   const headerBase = '// SPDX-License-Identifier:';
   const regexp = new RegExp(`(${headerBase}.*\n*)?`);
@@ -31,22 +49,14 @@ export const prependSpdxLicense = async (
 
   await Promise.all(
     sourcePaths.map(async (sourcePath) => {
-      if (config.only.length && !config.only.some((m) => sourcePath.match(m)))
-        return;
-      if (
-        config.except.length &&
-        config.except.some((m) => sourcePath.match(m))
-      )
-        return;
-
       // content is read from disk for preprocessor compatibility
-      const content = fs.readFileSync(sourcePath).toString();
+      const content = await fs.promises.readFile(sourcePath, 'utf-8');
 
       const partialMatch = content.startsWith(headerBase);
       const exactMatch = content.startsWith(header);
 
       if (exactMatch) return;
-      if (partialMatch && !config.overwrite) return;
+      if (partialMatch && !overwrite) return;
 
       const padding = partialMatch ? '' : '\n';
 
