@@ -1,20 +1,20 @@
 import {
   filterSourcePaths,
-  prependSpdxLicense,
+  prependLicense,
   readLicense,
-} from '../lib/prepend_spdx_license.js';
+} from '../lib/license_identifier.js';
 import { NewTaskActionFunction } from 'hardhat/types/tasks';
 
-interface PrependSpdxLicenseActionArguments {
+interface PrependLicenseActionArguments {
   license?: string;
   overwrite: boolean;
 }
 
-const action: NewTaskActionFunction<PrependSpdxLicenseActionArguments> = async (
+const action: NewTaskActionFunction<PrependLicenseActionArguments> = async (
   args,
   hre,
 ) => {
-  const config = hre.config.spdxLicenseIdentifier;
+  const config = hre.config.licenseIdentifier;
 
   const sourcePaths = filterSourcePaths(
     config,
@@ -24,7 +24,7 @@ const action: NewTaskActionFunction<PrependSpdxLicenseActionArguments> = async (
     args.license ?? config.license ?? readLicense(hre.config.paths.root);
   const overwrite = args.overwrite || config.overwrite;
 
-  await prependSpdxLicense(sourcePaths, license, overwrite);
+  await prependLicense(sourcePaths, license, overwrite);
 };
 
 export default action;

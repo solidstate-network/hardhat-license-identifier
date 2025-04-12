@@ -1,5 +1,5 @@
 import pkg from '../../package.json';
-import type { SpdxLicenseIdentifierConfig } from '../types.js';
+import type { LicenseIdentifierConfig } from '../types.js';
 import fs from 'fs';
 import { HardhatPluginError } from 'hardhat/plugins';
 
@@ -19,7 +19,7 @@ export const readLicense = (rootPath: string) => {
 };
 
 export const filterSourcePaths = (
-  config: SpdxLicenseIdentifierConfig,
+  config: LicenseIdentifierConfig,
   sourcePaths: string[],
 ) => {
   return sourcePaths.filter((sourcePath) => {
@@ -31,7 +31,7 @@ export const filterSourcePaths = (
   });
 };
 
-export const prependSpdxLicense = async (
+export const prependLicense = async (
   sourcePaths: string[],
   license: string,
   overwrite: boolean,

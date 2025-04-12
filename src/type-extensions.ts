@@ -1,14 +1,14 @@
 import {
-  SpdxLicenseIdentifierConfig,
-  SpdxLicenseIdentifierUserConfig,
+  LicenseIdentifierConfig,
+  LicenseIdentifierUserConfig,
 } from './types.js';
 
 declare module 'hardhat/types/config' {
   interface HardhatConfig {
-    spdxLicenseIdentifier: SpdxLicenseIdentifierConfig;
+    licenseIdentifier: LicenseIdentifierConfig;
   }
 
   interface HardhatUserConfig {
-    spdxLicenseIdentifier?: SpdxLicenseIdentifierUserConfig;
+    licenseIdentifier?: LicenseIdentifierUserConfig;
   }
 }

@@ -4,7 +4,7 @@ import hre from 'hardhat';
 import assert from 'node:assert';
 import { describe, it, before, afterEach } from 'node:test';
 
-const TASK_PREPEND_SPDX_LICENSE = 'prepend-spdx-license';
+const TASK_PREPEND_LICENSE = 'prepend-license';
 const HEADER_BASE = '// SPDX-License-Identifier:';
 
 const readContractSource = async (name: string) => {
@@ -12,7 +12,7 @@ const readContractSource = async (name: string) => {
   return await fs.promises.readFile(artifact.sourceName, 'utf-8');
 };
 
-describe(TASK_PREPEND_SPDX_LICENSE, () => {
+describe(TASK_PREPEND_LICENSE, () => {
   const cache: { [sourcePath: string]: string } = {};
 
   before(async () => {
@@ -33,7 +33,7 @@ describe(TASK_PREPEND_SPDX_LICENSE, () => {
     const contentsBefore = await readContractSource('ContractWithoutLicense');
     assert(!contentsBefore.includes(HEADER_BASE));
 
-    await hre.tasks.getTask(TASK_PREPEND_SPDX_LICENSE).run();
+    await hre.tasks.getTask(TASK_PREPEND_LICENSE).run();
 
     const contentsAfter = await readContractSource('ContractWithoutLicense');
     assert(contentsAfter.includes(`${HEADER_BASE} ${pkg.license}`));
@@ -45,7 +45,7 @@ describe(TASK_PREPEND_SPDX_LICENSE, () => {
     const contentsBefore = await readContractSource('ContractWithLicense');
     assert((contentsBefore.match(reg) ?? []).length === 1);
 
-    await hre.tasks.getTask(TASK_PREPEND_SPDX_LICENSE).run();
+    await hre.tasks.getTask(TASK_PREPEND_LICENSE).run();
 
     const contentsAfter = await readContractSource('ContractWithLicense');
     assert((contentsAfter.match(reg) ?? []).length === 1);

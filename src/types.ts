@@ -1,4 +1,4 @@
-export type SpdxLicenseIdentifierConfig = {
+export type LicenseIdentifierConfig = {
   license?: string;
   overwrite: boolean;
   runOnCompile: boolean;
@@ -6,5 +6,4 @@ export type SpdxLicenseIdentifierConfig = {
   except: string[];
 };
 
-export type SpdxLicenseIdentifierUserConfig =
-  Partial<SpdxLicenseIdentifierConfig>;
+export type LicenseIdentifierUserConfig = Partial<LicenseIdentifierConfig>;

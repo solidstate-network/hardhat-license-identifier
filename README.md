@@ -1,6 +1,6 @@
 # Hardhat SPDX License Identifier
 
-Prepend Solidity source files in Hardhat projects with the SPDX License Identifier specified in `package.json`.
+Automatically prepend Solidity source files in Hardhat projects with an SPDX License Identifier.
 
 > Versions of this plugin prior to `3.0.0` were released as `hardhat-spdx-license-identifier`, outside of the `@solidstate` namespace.
 
@@ -9,9 +9,9 @@ Prepend Solidity source files in Hardhat projects with the SPDX License Identifi
 ## Installation
 
 ```bash
-npm install --save-dev @solidstate/hardhat-spdx-license-identifier
+npm install --save-dev @solidstate/hardhat-license-identifier
 # or
-yarn add --dev @solidstate/hardhat-spdx-license-identifier
+yarn add --dev @solidstate/hardhat-license-identifier
 ```
 
 ## Usage
@@ -19,10 +19,10 @@ yarn add --dev @solidstate/hardhat-spdx-license-identifier
 Load plugin in Hardhat config:
 
 ```javascript
-require('@solidstate/hardhat-spdx-license-identifier');
+require('@solidstate/hardhat-license-identifier');
 ```
 
-Add configuration under the `spdxLicenseIdentifier` key:
+Add configuration under the `licenseIdentifier` key:
 
 | option         | description                                                                                            | default                           |
 | -------------- | ------------------------------------------------------------------------------------------------------ | --------------------------------- |
@@ -33,7 +33,7 @@ Add configuration under the `spdxLicenseIdentifier` key:
 | `except`       | `Array` of `String` matchers used to exclude paths                                                     | `[]`                              |
 
 ```javascript
-spdxLicenseIdentifier: {
+licenseIdentifier: {
   overwrite: true,
   runOnCompile: true,
   except: ['vendor/']
@@ -43,9 +43,9 @@ spdxLicenseIdentifier: {
 The included Hardhat task may be run manually. Its arguments override any existing configuration:
 
 ```bash
-npx hardhat prepend-spdx-license UNLICENSED --overwrite
+npx hardhat prepend-license UNLICENSED --overwrite
 # or
-yarn run hardhat prepend-spdx-license UNLICENSED --overwrite
+yarn run hardhat prepend-license UNLICENSED --overwrite
 ```
 
 Files which do not contain a license identifier will be prepended with one. Files with a license identifier which does not match that which is specified in `package.json` may be updated, depending on configuration.
