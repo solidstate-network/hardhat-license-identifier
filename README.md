@@ -19,7 +19,16 @@ yarn add --dev @solidstate/hardhat-license-identifier
 Load plugin in Hardhat config:
 
 ```javascript
-require('@solidstate/hardhat-license-identifier');
+import HardhatLicenseIdentifier from '@solidstate/hardhat-license-identifier';
+
+const config: HardhatUserConfig = {
+  plugins: [
+    HardhatLicenseIdentifier,
+  ],
+  licenseIdentifier: {
+    ... // see table for configuration options
+  },
+};
 ```
 
 Add configuration under the `licenseIdentifier` key:
