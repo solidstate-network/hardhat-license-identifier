@@ -40,12 +40,12 @@ spdxLicenseIdentifier: {
 }
 ```
 
-The included Hardhat task may be run manually:
+The included Hardhat task may be run manually. Its arguments override any existing configuration:
 
 ```bash
-npx hardhat prepend-spdx-license
+npx hardhat prepend-spdx-license UNLICENSED --overwrite
 # or
-yarn run hardhat prepend-spdx-license
+yarn run hardhat prepend-spdx-license UNLICENSED --overwrite
 ```
 
 Files which do not contain a license identifier will be prepended with one. Files with a license identifier which does not match that which is specified in `package.json` may be updated, depending on configuration.
