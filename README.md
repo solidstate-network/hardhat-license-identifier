@@ -1,4 +1,4 @@
-# Hardhat SPDX License Identifier
+# Hardhat License Identifier
 
 Automatically prepend Solidity source files in Hardhat projects with an SPDX License Identifier.
 
