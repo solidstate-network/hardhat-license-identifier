@@ -5,7 +5,7 @@ import './type-extensions.js';
 import { HardhatPlugin } from 'hardhat/types/plugins';
 
 const plugin: HardhatPlugin = {
-  id: pkg.name.split('/').pop()!,
+  id: pkg.name!,
   npmPackage: pkg.name!,
   tasks: [prependLicenseTask, compileTask],
   hookHandlers: {
