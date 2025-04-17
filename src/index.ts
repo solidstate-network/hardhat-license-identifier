@@ -1,13 +1,13 @@
 import pkg from '../package.json';
-import compileTask from './tasks/compile.js';
-import prependLicenseTask from './tasks/prepend_license.js';
+import taskCompile from './tasks/compile.js';
+import taskPrependLicense from './tasks/prepend_license.js';
 import './type_extensions.js';
 import { HardhatPlugin } from 'hardhat/types/plugins';
 
 const plugin: HardhatPlugin = {
   id: pkg.name!,
   npmPackage: pkg.name!,
-  tasks: [prependLicenseTask, compileTask],
+  tasks: [taskPrependLicense, taskCompile],
   hookHandlers: {
     config: import.meta.resolve('./hooks/config.js'),
   },
