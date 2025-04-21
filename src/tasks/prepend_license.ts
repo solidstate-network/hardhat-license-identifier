@@ -7,6 +7,7 @@ export default task(TASK_PREPEND_LICENSE)
   .addPositionalArgument({
     name: 'license',
     description: 'SPDX license to add to sources (configuration override)',
+    defaultValue: '',
   })
   .addFlag({
     name: 'overwrite',
