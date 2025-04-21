@@ -31,7 +31,7 @@ describe(TASK_PREPEND_LICENSE, () => {
 
   it('writes license identifier to top of source file', async () => {
     const contentsBefore = await readContractSource('ContractWithoutLicense');
-    assert(contentsBefore.includes(HEADER_BASE));
+    assert(!contentsBefore.includes(HEADER_BASE));
 
     await hre.tasks.getTask(TASK_PREPEND_LICENSE).run();
 
