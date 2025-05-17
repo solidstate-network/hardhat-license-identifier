@@ -3,7 +3,7 @@ import {
   prependLicense,
   readLicense,
 } from '../lib/license_identifier.js';
-import { NewTaskActionFunction } from 'hardhat/types/tasks';
+import type { NewTaskActionFunction } from 'hardhat/types/tasks';
 
 interface PrependLicenseActionArguments {
   license: string;
