@@ -11,7 +11,7 @@ Automatically prepend Solidity source files in Hardhat projects with an SPDX Lic
 ```bash
 npm install --save-dev @solidstate/hardhat-license-identifier
 # or
-yarn add --dev @solidstate/hardhat-license-identifier
+pnpm add -D @solidstate/hardhat-license-identifier
 ```
 
 ## Usage
@@ -54,21 +54,21 @@ The included Hardhat task may be run manually. Its arguments override any existi
 ```bash
 npx hardhat prepend-license UNLICENSED --overwrite
 # or
-yarn run hardhat prepend-license UNLICENSED --overwrite
+pnpm hardhat prepend-license UNLICENSED --overwrite
 ```
 
 Files which do not contain a license identifier will be prepended with one. Files with a license identifier which does not match that which is specified in `package.json` may be updated, depending on configuration.
 
 ## Development
 
-Install dependencies via Yarn:
+Install dependencies via pnpm:
 
 ```bash
-yarn install
+pnpm install
 ```
 
 Setup Husky to format code on commit:
 
 ```bash
-yarn prepare
+pnpm prepare
 ```
