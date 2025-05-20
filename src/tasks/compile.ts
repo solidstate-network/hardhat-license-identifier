@@ -1,6 +1,6 @@
+import { TASK_COMPILE } from '../task_names.js';
 import { overrideTask } from 'hardhat/config';
 
-// TODO: import task name constant from Hardhat
-export default overrideTask('compile')
+export default overrideTask(TASK_COMPILE)
   .setAction(import.meta.resolve('../actions/compile.js'))
   .build();
