@@ -1,4 +1,4 @@
-import pkg from '../../package.json';
+import pkg from '../../package.json' with { type: 'json' };
 import type { LicenseIdentifierConfig } from '../types.js';
 import { filter } from '@solidstate/hardhat-solidstate-utils/filter';
 import fs from 'fs';
