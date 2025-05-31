@@ -1,5 +1,6 @@
 import pkg from '../../package.json';
 import type { LicenseIdentifierConfig } from '../types.js';
+import { filter } from '@solidstate/hardhat-solidstate-utils/filter';
 import fs from 'fs';
 import { HardhatPluginError } from 'hardhat/plugins';
 
@@ -22,13 +23,7 @@ export const filterSourcePaths = (
   config: LicenseIdentifierConfig,
   sourcePaths: string[],
 ) => {
-  return sourcePaths.filter((sourcePath) => {
-    if (config.only.length && !config.only.some((m) => sourcePath.match(m)))
-      return false;
-    if (config.except.length && config.except.some((m) => sourcePath.match(m)))
-      return false;
-    return true;
-  });
+  return filter(sourcePaths, config);
 };
 
 export const prependLicense = async (
