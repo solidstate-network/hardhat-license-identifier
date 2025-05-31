@@ -1,36 +1,24 @@
-import './tasks/compile';
-import './tasks/prepend_spdx_license';
-import { extendConfig } from 'hardhat/config';
-import 'hardhat/types/config';
+import pkg from '../package.json';
+import taskCompile from './tasks/compile.js';
+import taskPrependLicense from './tasks/prepend_license.js';
+import './type_extensions.js';
+import { HardhatPlugin } from 'hardhat/types/plugins';
 
-declare module 'hardhat/types/config' {
-  interface HardhatUserConfig {
-    spdxLicenseIdentifier?: {
-      overwrite?: boolean;
-      runOnCompile?: boolean;
-      only?: string[];
-      except?: string[];
-    };
-  }
-
-  interface HardhatConfig {
-    spdxLicenseIdentifier: {
-      overwrite: boolean;
-      runOnCompile: boolean;
-      only: string[];
-      except: string[];
-    };
-  }
-}
-
-extendConfig((config, userConfig) => {
-  config.spdxLicenseIdentifier = Object.assign(
-    {
-      overwrite: false,
-      runOnCompile: false,
-      only: [],
-      except: [],
+const plugin: HardhatPlugin = {
+  id: pkg.name!,
+  npmPackage: pkg.name!,
+  dependencies: [
+    async () => {
+      const { default: HardhatSolidstateUtils } = await import(
+        '@solidstate/hardhat-solidstate-utils'
+      );
+      return HardhatSolidstateUtils;
     },
-    userConfig.spdxLicenseIdentifier,
-  );
-});
+  ],
+  tasks: [taskPrependLicense, taskCompile],
+  hookHandlers: {
+    config: import.meta.resolve('./hooks/config.js'),
+  },
+};
+
+export default plugin;
