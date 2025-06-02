@@ -1,5 +1,5 @@
 import pkg from '../../package.json' with { type: 'json' };
-import fs from 'fs';
+import { readUtf8File, writeUtf8File } from '@nomicfoundation/hardhat-utils/fs';
 import hre from 'hardhat';
 import assert from 'node:assert';
 import { describe, it, before, afterEach } from 'node:test';
@@ -8,8 +8,8 @@ const TASK_PREPEND_LICENSE = 'prepend-license';
 const HEADER_BASE = '// SPDX-License-Identifier:';
 
 const readContractSource = async (name: string) => {
-  const artifact = await hre.artifacts.readArtifact(name);
-  return await fs.promises.readFile(artifact.sourceName, 'utf-8');
+  const { sourceName } = await hre.artifacts.readArtifact(name);
+  return await readUtf8File(sourceName);
 };
 
 describe(TASK_PREPEND_LICENSE, () => {
@@ -19,13 +19,13 @@ describe(TASK_PREPEND_LICENSE, () => {
     const sourcePaths = await hre.solidity.getRootFilePaths();
 
     for (const sourcePath of sourcePaths) {
-      cache[sourcePath] = await fs.promises.readFile(sourcePath, 'utf-8');
+      cache[sourcePath] = await readUtf8File(sourcePath);
     }
   });
 
   afterEach(async () => {
     for (const sourcePath in cache) {
-      fs.writeFileSync(sourcePath, cache[sourcePath]);
+      await writeUtf8File(sourcePath, cache[sourcePath]);
     }
   });
 
