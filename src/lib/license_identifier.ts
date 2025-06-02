@@ -1,8 +1,8 @@
 import pkg from '../../package.json' with { type: 'json' };
 import type { LicenseIdentifierConfig } from '../types.js';
+import { readUtf8File, writeUtf8File } from '@nomicfoundation/hardhat-utils/fs';
 import { readClosestPackageJson } from '@nomicfoundation/hardhat-utils/package';
 import { filter } from '@solidstate/hardhat-solidstate-utils/filter';
-import fs from 'fs';
 import { HardhatPluginError } from 'hardhat/plugins';
 
 export const readLicense = async (rootPath: string) => {
@@ -38,12 +38,12 @@ export const prependLicense = async (
 
   await Promise.all(
     sourcePaths.map(async (sourcePath) => {
-      const content = await fs.promises.readFile(sourcePath, 'utf-8');
+      const content = await readUtf8File(sourcePath);
 
       if (content.startsWith(header)) return;
       if (content.startsWith(headerBase) && !overwrite) return;
 
-      await fs.promises.writeFile(sourcePath, content.replace(regexp, header));
+      await writeUtf8File(sourcePath, content.replace(regexp, header));
 
       count++;
     }),
