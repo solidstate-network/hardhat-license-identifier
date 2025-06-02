@@ -1,13 +1,12 @@
 import pkg from '../../package.json' with { type: 'json' };
 import type { LicenseIdentifierConfig } from '../types.js';
+import { readClosestPackageJson } from '@nomicfoundation/hardhat-utils/package';
 import { filter } from '@solidstate/hardhat-solidstate-utils/filter';
 import fs from 'fs';
 import { HardhatPluginError } from 'hardhat/plugins';
 
-export const readLicense = (rootPath: string) => {
-  const license: string = JSON.parse(
-    fs.readFileSync(`${rootPath}/package.json`, 'utf8'),
-  ).license;
+export const readLicense = async (rootPath: string) => {
+  const { license } = await readClosestPackageJson(rootPath);
 
   if (!license) {
     throw new HardhatPluginError(

@@ -12,3 +12,9 @@ declare module 'hardhat/types/config' {
     licenseIdentifier?: LicenseIdentifierUserConfig;
   }
 }
+
+declare module '@nomicfoundation/hardhat-utils/package' {
+  interface PackageJson {
+    license?: string;
+  }
+}

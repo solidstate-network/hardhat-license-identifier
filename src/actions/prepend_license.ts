@@ -21,7 +21,9 @@ const action: NewTaskActionFunction<PrependLicenseActionArguments> = async (
     await hre.solidity.getRootFilePaths(),
   );
   const license =
-    args.license || config.license || readLicense(hre.config.paths.root);
+    args.license ||
+    config.license ||
+    (await readLicense(hre.config.paths.root));
   const overwrite = args.overwrite || config.overwrite;
 
   await prependLicense(sourcePaths, license, overwrite);

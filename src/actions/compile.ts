@@ -13,7 +13,8 @@ const action: TaskOverrideActionFunction = async (args, hre, runSuper) => {
       config,
       await hre.solidity.getRootFilePaths(),
     );
-    const license = config.license ?? readLicense(hre.config.paths.root);
+    const license =
+      config.license ?? (await readLicense(hre.config.paths.root));
     const overwrite = config.overwrite;
 
     await prependLicense(sourcePaths, license, overwrite);
