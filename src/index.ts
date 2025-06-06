@@ -1,5 +1,6 @@
 import pkg from '../package.json' with { type: 'json' };
 import taskPrependLicense from './tasks/prepend_license.js';
+import taskShowLicense from './tasks/show_license.js';
 import './type_extensions.js';
 import { HardhatPlugin } from 'hardhat/types/plugins';
 
@@ -14,7 +15,7 @@ const plugin: HardhatPlugin = {
       return HardhatSolidstateUtils;
     },
   ],
-  tasks: [taskPrependLicense],
+  tasks: [taskPrependLicense, taskShowLicense],
   hookHandlers: {
     config: import.meta.resolve('./hooks/config.js'),
     solidity: import.meta.resolve('./hooks/solidity.js'),

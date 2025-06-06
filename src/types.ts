@@ -7,3 +7,8 @@ export type LicenseIdentifierConfig = {
 } & FilterOptions;
 
 export type LicenseIdentifierUserConfig = Partial<LicenseIdentifierConfig>;
+
+export type SourceLicense = {
+  sourcePath: string;
+  license?: string;
+};

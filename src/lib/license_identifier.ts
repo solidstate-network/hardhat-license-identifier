@@ -1,16 +1,18 @@
 import pkg from '../../package.json' with { type: 'json' };
-import type { LicenseIdentifierConfig } from '../types.js';
+import type { LicenseIdentifierConfig, SourceLicense } from '../types.js';
 import { readUtf8File, writeUtf8File } from '@nomicfoundation/hardhat-utils/fs';
 import { readClosestPackageJson } from '@nomicfoundation/hardhat-utils/package';
 import { filter } from '@solidstate/hardhat-solidstate-utils/filter';
 import { HardhatPluginError } from 'hardhat/plugins';
+import path from 'node:path';
 
 const headerBase = '// SPDX-License-Identifier:';
-const regexp = new RegExp(`(${headerBase}.*\n)?`);
+const headerRegexp = new RegExp(`(${headerBase}.*\n)?`);
+const identifierRegexp = new RegExp(`${headerBase} (\\w+)`);
 
 const formatHeader = (license: string) => `${headerBase} ${license}\n`;
 
-export const readLicense = async (rootPath: string) => {
+export const readLicenseFromPackageJson = async (rootPath: string) => {
   const { license } = await readClosestPackageJson(rootPath);
 
   if (!license) {
@@ -21,6 +23,27 @@ export const readLicense = async (rootPath: string) => {
   }
 
   return license;
+};
+
+const readLicenseFromSourceContent = (content: string) => {
+  return content.match(identifierRegexp)?.[1];
+};
+
+const readLicenseFromSourcePath = async (sourcePath: string) => {
+  const content = await readUtf8File(sourcePath);
+  return readLicenseFromSourceContent(content);
+};
+
+export const readSourceLicenses = async (
+  sourcePaths: string[],
+  rootPath: string,
+): Promise<SourceLicense[]> => {
+  return await Promise.all(
+    sourcePaths.map(async (sourcePath) => ({
+      sourcePath: path.relative(rootPath, sourcePath),
+      license: await readLicenseFromSourcePath(sourcePath),
+    })),
+  );
 };
 
 export const filterSourcePaths = (
@@ -74,5 +97,5 @@ export const prependLicenseToFileContent = (
   license: string,
 ): string => {
   const header = formatHeader(license);
-  return fileContent.replace(regexp, header);
+  return fileContent.replace(headerRegexp, header);
 };

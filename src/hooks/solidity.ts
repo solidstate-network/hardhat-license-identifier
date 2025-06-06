@@ -1,7 +1,7 @@
 import {
   hasMatchingLicense,
   prependLicenseToFileContent,
-  readLicense,
+  readLicenseFromPackageJson,
 } from '../lib/license_identifier.js';
 import { writeUtf8File } from '@nomicfoundation/hardhat-utils/fs';
 import type { SolidityHooks } from 'hardhat/types/hooks';
@@ -19,7 +19,8 @@ export default async (): Promise<Partial<SolidityHooks>> => ({
 
     if (config.runOnCompile) {
       const license =
-        config.license ?? (await readLicense(context.config.paths.root));
+        config.license ??
+        (await readLicenseFromPackageJson(context.config.paths.root));
       const overwrite = config.overwrite;
 
       if (!hasMatchingLicense(fileContent, license, overwrite)) {
