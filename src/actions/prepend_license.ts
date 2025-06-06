@@ -1,6 +1,6 @@
 import {
   filterSourcePaths,
-  prependLicense,
+  prependLicenseToSources,
   readLicense,
 } from '../lib/license_identifier.js';
 import type { NewTaskActionFunction } from 'hardhat/types/tasks';
@@ -26,7 +26,7 @@ const action: NewTaskActionFunction<PrependLicenseActionArguments> = async (
     (await readLicense(hre.config.paths.root));
   const overwrite = args.overwrite || config.overwrite;
 
-  await prependLicense(sourcePaths, license, overwrite);
+  await prependLicenseToSources(sourcePaths, license, overwrite);
 };
 
 export default action;

@@ -1,7 +1,9 @@
 import {
+  hasMatchingLicense,
+  prependLicenseToFileContent,
   readLicense,
-  writeFileWithLicense,
 } from '../lib/license_identifier.js';
+import { writeUtf8File } from '@nomicfoundation/hardhat-utils/fs';
 import type { SolidityHooks } from 'hardhat/types/hooks';
 
 export default async (): Promise<Partial<SolidityHooks>> => ({
@@ -20,12 +22,10 @@ export default async (): Promise<Partial<SolidityHooks>> => ({
         config.license ?? (await readLicense(context.config.paths.root));
       const overwrite = config.overwrite;
 
-      fileContent = await writeFileWithLicense(
-        fsPath,
-        fileContent,
-        license,
-        overwrite,
-      );
+      if (!hasMatchingLicense(fileContent, license, overwrite)) {
+        fileContent = prependLicenseToFileContent(fileContent, license);
+        await writeUtf8File(fsPath, fileContent);
+      }
     }
 
     return await next(context, sourceName, fsPath, fileContent, solcVersion);

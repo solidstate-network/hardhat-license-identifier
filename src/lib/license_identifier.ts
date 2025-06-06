@@ -30,7 +30,7 @@ export const filterSourcePaths = (
   return filter(sourcePaths, config);
 };
 
-export const prependLicense = async (
+export const prependLicenseToSources = async (
   sourcePaths: string[],
   license: string,
   overwrite: boolean,
@@ -41,14 +41,11 @@ export const prependLicense = async (
     sourcePaths.map(async (sourcePath) => {
       const content = await readUtf8File(sourcePath);
 
-      const fileContentWithLience = await writeFileWithLicense(
-        sourcePath,
-        content,
-        license,
-        overwrite,
-      );
-
-      if (fileContentWithLience !== content) {
+      if (!hasMatchingLicense(content, license, overwrite)) {
+        await writeUtf8File(
+          sourcePath,
+          prependLicenseToFileContent(content, license),
+        );
         count++;
       }
     }),
@@ -59,20 +56,23 @@ export const prependLicense = async (
   );
 };
 
-export const writeFileWithLicense = async (
-  fsPath: string,
+export const hasMatchingLicense = (
   fileContent: string,
   license: string,
   overwrite: boolean,
-): Promise<string> => {
+): boolean => {
   const header = formatHeader(license);
 
-  if (fileContent.startsWith(header)) return fileContent;
-  if (fileContent.startsWith(headerBase) && !overwrite) return fileContent;
+  return (
+    fileContent.startsWith(header) ||
+    (fileContent.startsWith(headerBase) && !overwrite)
+  );
+};
 
-  const fileContentWithLicense = fileContent.replace(regexp, header);
-
-  await writeUtf8File(fsPath, fileContentWithLicense);
-
-  return fileContentWithLicense;
+export const prependLicenseToFileContent = (
+  fileContent: string,
+  license: string,
+): string => {
+  const header = formatHeader(license);
+  return fileContent.replace(regexp, header);
 };
