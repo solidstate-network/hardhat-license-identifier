@@ -5,6 +5,11 @@ import { readClosestPackageJson } from '@nomicfoundation/hardhat-utils/package';
 import { filter } from '@solidstate/hardhat-solidstate-utils/filter';
 import { HardhatPluginError } from 'hardhat/plugins';
 
+const headerBase = '// SPDX-License-Identifier:';
+const regexp = new RegExp(`(${headerBase}.*\n)?`);
+
+const formatHeader = (license: string) => `${headerBase} ${license}\n`;
+
 export const readLicense = async (rootPath: string) => {
   const { license } = await readClosestPackageJson(rootPath);
 
@@ -30,26 +35,44 @@ export const prependLicense = async (
   license: string,
   overwrite: boolean,
 ) => {
-  const headerBase = '// SPDX-License-Identifier:';
-  const regexp = new RegExp(`(${headerBase}.*\n)?`);
-  const header = `${headerBase} ${license}\n`;
-
   let count = 0;
 
   await Promise.all(
     sourcePaths.map(async (sourcePath) => {
       const content = await readUtf8File(sourcePath);
 
-      if (content.startsWith(header)) return;
-      if (content.startsWith(headerBase) && !overwrite) return;
+      const fileContentWithLience = await writeFileWithLicense(
+        sourcePath,
+        content,
+        license,
+        overwrite,
+      );
 
-      await writeUtf8File(sourcePath, content.replace(regexp, header));
-
-      count++;
+      if (fileContentWithLience !== content) {
+        count++;
+      }
     }),
   );
 
   console.log(
     `Prepended SPDX License Identifier "${license}" to ${count} sources.`,
   );
+};
+
+export const writeFileWithLicense = async (
+  fsPath: string,
+  fileContent: string,
+  license: string,
+  overwrite: boolean,
+): Promise<string> => {
+  const header = formatHeader(license);
+
+  if (fileContent.startsWith(header)) return fileContent;
+  if (fileContent.startsWith(headerBase) && !overwrite) return fileContent;
+
+  const fileContentWithLicense = fileContent.replace(regexp, header);
+
+  await writeUtf8File(fsPath, fileContentWithLicense);
+
+  return fileContentWithLicense;
 };
