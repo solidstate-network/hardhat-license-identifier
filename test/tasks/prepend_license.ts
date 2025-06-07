@@ -1,10 +1,10 @@
 import pkg from '../../package.json' with { type: 'json' };
+import { TASK_PREPEND_LICENSE } from '../../src/task_names.js';
 import { readUtf8File, writeUtf8File } from '@nomicfoundation/hardhat-utils/fs';
 import hre from 'hardhat';
 import assert from 'node:assert';
 import { describe, it, before, afterEach } from 'node:test';
 
-const TASK_PREPEND_LICENSE = 'prepend-license';
 const HEADER_BASE = '// SPDX-License-Identifier:';
 
 const readContractSource = async (name: string) => {
