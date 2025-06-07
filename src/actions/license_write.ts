@@ -5,12 +5,12 @@ import {
 } from '../lib/license_identifier.js';
 import type { NewTaskActionFunction } from 'hardhat/types/tasks';
 
-interface PrependLicenseActionArguments {
+interface TaskActionArguments {
   license: string;
   overwrite: boolean;
 }
 
-const action: NewTaskActionFunction<PrependLicenseActionArguments> = async (
+const action: NewTaskActionFunction<TaskActionArguments> = async (
   args,
   hre,
 ) => {

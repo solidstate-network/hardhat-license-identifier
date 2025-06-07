@@ -5,9 +5,9 @@ import {
 import { printSourceLicenses } from '../lib/print.js';
 import type { NewTaskActionFunction } from 'hardhat/types/tasks';
 
-interface ShowLicenseActionArguments {}
+interface TaskActionArguments {}
 
-const action: NewTaskActionFunction<ShowLicenseActionArguments> = async (
+const action: NewTaskActionFunction<TaskActionArguments> = async (
   args,
   hre,
 ) => {

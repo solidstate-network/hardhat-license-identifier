@@ -1,9 +1,9 @@
-import { TASK_PREPEND_LICENSE } from '../task_names.js';
+import { TASK_LICENSE_WRITE } from '../task_names.js';
 import { task } from 'hardhat/config';
 
-export default task(TASK_PREPEND_LICENSE)
+export default task(TASK_LICENSE_WRITE)
   .setDescription('Prepend SPDX license identifier to local source files')
-  .setAction(import.meta.resolve('../actions/prepend_license.js'))
+  .setAction(import.meta.resolve('../actions/license_write.js'))
   .addPositionalArgument({
     name: 'license',
     description: 'SPDX license to add to sources (configuration override)',
