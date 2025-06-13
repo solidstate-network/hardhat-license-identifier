@@ -1,5 +1,5 @@
 import pkg from '../../package.json' with { type: 'json' };
-import { TASK_PREPEND_LICENSE } from '../../src/task_names.js';
+import { TASK_LICENSE_WRITE } from '../../src/task_names.js';
 import { readUtf8File, writeUtf8File } from '@nomicfoundation/hardhat-utils/fs';
 import hre from 'hardhat';
 import assert from 'node:assert';
@@ -12,7 +12,7 @@ const readContractSource = async (name: string) => {
   return await readUtf8File(sourceName);
 };
 
-describe(TASK_PREPEND_LICENSE, () => {
+describe(TASK_LICENSE_WRITE, () => {
   const cache: { [sourcePath: string]: string } = {};
 
   before(async () => {
@@ -33,7 +33,7 @@ describe(TASK_PREPEND_LICENSE, () => {
     const contentsBefore = await readContractSource('ContractWithoutLicense');
     assert(!contentsBefore.includes(HEADER_BASE));
 
-    await hre.tasks.getTask(TASK_PREPEND_LICENSE).run();
+    await hre.tasks.getTask(TASK_LICENSE_WRITE).run();
 
     const contentsAfter = await readContractSource('ContractWithoutLicense');
     assert(contentsAfter.includes(`${HEADER_BASE} ${pkg.license}`));
@@ -45,7 +45,7 @@ describe(TASK_PREPEND_LICENSE, () => {
     const contentsBefore = await readContractSource('ContractWithLicense');
     assert((contentsBefore.match(reg) ?? []).length === 1);
 
-    await hre.tasks.getTask(TASK_PREPEND_LICENSE).run();
+    await hre.tasks.getTask(TASK_LICENSE_WRITE).run();
 
     const contentsAfter = await readContractSource('ContractWithLicense');
     assert((contentsAfter.match(reg) ?? []).length === 1);
