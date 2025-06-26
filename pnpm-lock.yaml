@@ -35,7 +35,7 @@ importers:
         version: 5.61.2(@types/node@24.0.4)(typescript@5.8.3)
       lint-staged:
         specifier: github:ItsNickBarry/lint-staged#knip
-        version: https://codeload.github.com/ItsNickBarry/lint-staged/tar.gz/daa65d7006ab27397be251c71bfa05fa63be2b64
+        version: https://codeload.github.com/ItsNickBarry/lint-staged/tar.gz/3d833af058e3c9151d1b1f3d121d7e2d88bf96f3
       prettier:
         specifier: ^3.6.1
         version: 3.6.1
@@ -869,9 +869,9 @@ packages:
     resolution: {integrity: sha512-/vlFKAoH5Cgt3Ie+JLhRbwOsCQePABiU3tJ1egGvyQ+33R/vcwM2Zl2QR/LzjsBeItPt3oSVXapn+m4nQDvpzw==}
     engines: {node: '>=14'}
 
-  lint-staged@https://codeload.github.com/ItsNickBarry/lint-staged/tar.gz/daa65d7006ab27397be251c71bfa05fa63be2b64:
-    resolution: {tarball: https://codeload.github.com/ItsNickBarry/lint-staged/tar.gz/daa65d7006ab27397be251c71bfa05fa63be2b64}
-    version: 16.1.1
+  lint-staged@https://codeload.github.com/ItsNickBarry/lint-staged/tar.gz/3d833af058e3c9151d1b1f3d121d7e2d88bf96f3:
+    resolution: {tarball: https://codeload.github.com/ItsNickBarry/lint-staged/tar.gz/3d833af058e3c9151d1b1f3d121d7e2d88bf96f3}
+    version: 16.1.2
     engines: {node: '>=20.17'}
     hasBin: true
 
@@ -1912,7 +1912,7 @@ snapshots:
 
   lilconfig@3.1.3: {}
 
-  lint-staged@https://codeload.github.com/ItsNickBarry/lint-staged/tar.gz/daa65d7006ab27397be251c71bfa05fa63be2b64:
+  lint-staged@https://codeload.github.com/ItsNickBarry/lint-staged/tar.gz/3d833af058e3c9151d1b1f3d121d7e2d88bf96f3:
     dependencies:
       chalk: 5.4.1
       commander: 14.0.0
