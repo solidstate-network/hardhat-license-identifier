@@ -12,7 +12,7 @@ const readContractSource = async (name: string) => {
   return await readUtf8File(sourceName);
 };
 
-describe(TASK_LICENSE_WRITE, () => {
+describe(TASK_LICENSE_WRITE.join(' '), () => {
   const cache: { [sourcePath: string]: string } = {};
 
   before(async () => {
