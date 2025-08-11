@@ -5,5 +5,5 @@ export default task(TASK_LICENSE_LIST)
   .setDescription(
     'Print table of SPDX license identifiers in use by local source files',
   )
-  .setAction(import.meta.resolve('../actions/license_list.js'))
+  .setAction(() => import('../actions/license_list.js'))
   .build();

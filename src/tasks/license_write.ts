@@ -3,7 +3,6 @@ import { task } from 'hardhat/config';
 
 export default task(TASK_LICENSE_WRITE)
   .setDescription('Prepend SPDX license identifier to local source files')
-  .setAction(import.meta.resolve('../actions/license_write.js'))
   .addPositionalArgument({
     name: 'license',
     description: 'SPDX license to add to sources (configuration override)',
@@ -14,4 +13,5 @@ export default task(TASK_LICENSE_WRITE)
     description:
       'whether to overwrite existing SPDX license identifiers (configuration override)',
   })
+  .setAction(() => import('../actions/license_write.js'))
   .build();
