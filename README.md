@@ -19,11 +19,11 @@ pnpm add -D @solidstate/hardhat-license-identifier
 Load plugin in Hardhat config:
 
 ```javascript
-import HardhatLicenseIdentifier from '@solidstate/hardhat-license-identifier';
+import hardhatLicenseIdentifier from '@solidstate/hardhat-license-identifier';
 
 const config: HardhatUserConfig = {
   plugins: [
-    HardhatLicenseIdentifier,
+    hardhatLicenseIdentifier,
   ],
   licenseIdentifier: {
     ... // see table for configuration options
