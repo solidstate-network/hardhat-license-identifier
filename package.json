@@ -1,6 +1,6 @@
 {
   "name": "@solidstate/hardhat-license-identifier",
-  "version": "3.0.0-next.3",
+  "version": "3.0.0",
   "description": "Prepend local Solidity source files with an SPDX License Identifier",
   "keywords": [
     "hardhat",
