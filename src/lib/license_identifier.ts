@@ -50,7 +50,10 @@ export const filterSourcePaths = (
   config: LicenseIdentifierConfig,
   sourcePaths: string[],
 ) => {
-  return filter(sourcePaths, config);
+  return filter(
+    sourcePaths.filter((p) => !p.startsWith('npm:')),
+    config,
+  );
 };
 
 export const prependLicenseToSources = async (
