@@ -45,6 +45,7 @@
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@tsconfig/node22": "^22.0.2",
     "@types/node": "^24.2.1",
+    "chalk": "^5.6.2",
     "hardhat": "^3.0.0",
     "husky": "^9.1.7",
     "knip": "^5.62.0",
