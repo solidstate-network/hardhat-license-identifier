@@ -15,6 +15,9 @@ importers:
       '@nomicfoundation/hardhat-utils':
         specifier: ^3.0.0
         version: 3.0.0
+      '@solidstate/contracts':
+        specifier: 1.0.0-next.1
+        version: 1.0.0-next.1
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.2
         version: 5.2.2(@vue/compiler-sfc@3.5.16)(prettier@3.6.2)
@@ -466,6 +469,9 @@ packages:
 
   '@solidity-parser/parser@0.20.1':
     resolution: {integrity: sha512-58I2sRpzaQUN+jJmWbHfbWf9AKfzqCI8JAdFB0vbyY+u8tBRcuTt9LxzasvR0LGQpcRv97eyV7l61FQ3Ib7zVw==}
+
+  '@solidstate/contracts@1.0.0-next.1':
+    resolution: {integrity: sha512-fmQdlSbdyHkOd56u4YzqrA+k3MXGrAQPvMQX4MhPLSofa0o3aWBcNYvTZX4EexogRyZADqYNZCg3f7Ma5rByRA==}
 
   '@solidstate/hardhat-solidstate-utils@1.0.0':
     resolution: {integrity: sha512-11p/uOAQ7vsHmXenXEIa0e5UstUN0cI0iHF8TQNCBeUosv5QYeljmhSYX22uS8SUR7aRH2g3Nauq0eveJwHoJQ==}
@@ -1443,6 +1449,8 @@ snapshots:
   '@sentry/core@9.22.0': {}
 
   '@solidity-parser/parser@0.20.1': {}
+
+  '@solidstate/contracts@1.0.0-next.1': {}
 
   '@solidstate/hardhat-solidstate-utils@1.0.0(@nomicfoundation/hardhat-utils@3.0.0)(hardhat@3.0.0)':
     dependencies:
