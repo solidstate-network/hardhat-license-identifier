@@ -1,5 +1,6 @@
 import {
   filterSourcePaths,
+  readLicenseFromPackageJson,
   readSourceLicenses,
 } from '../lib/license_identifier.js';
 import { printSourceLicenses } from '../lib/print.js';
@@ -18,12 +19,16 @@ const action: NewTaskActionFunction<TaskActionArguments> = async (
     await hre.solidity.getRootFilePaths(),
   );
 
+  const packageJsonLicense = await readLicenseFromPackageJson(
+    hre.config.paths.root,
+  );
+
   const sourceLicenses = await readSourceLicenses(
     sourcePaths,
     hre.config.paths.root,
   );
 
-  printSourceLicenses(sourceLicenses);
+  printSourceLicenses(packageJsonLicense, sourceLicenses);
 };
 
 export default action;
