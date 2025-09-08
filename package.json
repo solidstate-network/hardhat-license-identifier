@@ -37,11 +37,12 @@
     "test": "pnpm clean && tsx --test --experimental-test-coverage"
   },
   "dependencies": {
-    "@solidstate/hardhat-solidstate-utils": "^1.0.0"
+    "@solidstate/hardhat-solidstate-utils": "^1.0.0",
+    "chalk": "^5.6.2"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-utils": "^3.0.0",
-    "@solidstate/contracts": "1.0.0-next.1",
+    "@solidstate/contracts": "^1.0.0-next.1",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@tsconfig/node22": "^22.0.2",
     "@types/node": "^24.2.1",

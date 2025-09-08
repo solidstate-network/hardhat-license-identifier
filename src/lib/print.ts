@@ -1,23 +1,21 @@
 import type { SourceLicense } from '../types.js';
 import { createTable } from '@solidstate/hardhat-solidstate-utils/table';
+import chalk from 'chalk';
 
-export const printSourceLicenses = (sourceLicenses: SourceLicense[]) => {
+export const printSourceLicenses = (
+  packageJsonLicense: string,
+  sourceLicenses: SourceLicense[],
+) => {
   const table = createTable();
 
   table.push([
-    {
-      content: 'package.json license',
-    },
-    {
-      content: 'TODO: try to store ',
-    },
+    { content: chalk.gray('package.json') },
+    { content: chalk.gray(packageJsonLicense) },
   ]);
 
   table.push([
-    {
-      content: 'Source Path',
-    },
-    { content: 'License' },
+    { content: chalk.bold('Source Path') },
+    { content: chalk.bold('License') },
   ]);
 
   for (const sourceLicense of sourceLicenses) {
