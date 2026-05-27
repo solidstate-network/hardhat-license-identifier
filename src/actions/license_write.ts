@@ -6,7 +6,7 @@ import {
 import type { NewTaskActionFunction } from 'hardhat/types/tasks';
 
 interface TaskActionArguments {
-  license: string;
+  license?: string;
   overwrite: boolean;
 }
 
