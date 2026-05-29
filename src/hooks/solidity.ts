@@ -17,10 +17,7 @@ export default async (): Promise<Partial<SolidityHooks>> => ({
         (await readLicenseFromPackageJson(context.config.paths.root));
       const overwrite = config.overwrite;
 
-      const sourcePaths = filterSourcePaths(
-        config,
-        await context.solidity.getRootFilePaths(),
-      );
+      const sourcePaths = filterSourcePaths(config, rootFilePaths);
 
       await Promise.all(
         sourcePaths.map(async (sourcePath) => {
