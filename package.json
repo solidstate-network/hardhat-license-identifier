@@ -1,6 +1,6 @@
 {
   "name": "@solidstate/hardhat-license-identifier",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "Prepend local Solidity source files with an SPDX License Identifier",
   "keywords": [
     "hardhat",
@@ -47,18 +47,19 @@
     "@tsconfig/node22": "^22.0.5",
     "@types/node": "^25.9.1",
     "exec-staged": "^0.2.3",
-    "hardhat": "^3.6.0",
+    "hardhat": "^3.7.0",
     "husky": "^9.1.7",
     "knip-exec-staged": "^5.63.1",
     "prettier": "^3.8.3",
     "prettier-plugin-packagejson": "^3.0.2",
     "prettier-plugin-solidity": "^2.3.1",
+    "release-it": "^20.0.0",
     "tsx": "^4.22.3",
     "typescript": "^6.0.3"
   },
   "peerDependencies": {
     "@nomicfoundation/hardhat-utils": "^4.0.0",
-    "hardhat": "^3.0.0"
+    "hardhat": "^3.7.0"
   },
   "publishConfig": {
     "access": "public"
