@@ -36,6 +36,6 @@ export default async (): Promise<Partial<SolidityHooks>> => ({
       );
     }
 
-    return next(context, rootFilePaths, options);
+    return await next(context, rootFilePaths, options);
   },
 });
