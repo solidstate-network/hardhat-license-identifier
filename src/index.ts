@@ -4,7 +4,7 @@ import taskLicenseList from './tasks/license_list.js';
 import taskLicenseWrite from './tasks/license_write.js';
 import './type_extensions.js';
 import { definePlugin } from 'hardhat/plugins';
-import { HardhatPlugin } from 'hardhat/types/plugins';
+import type { HardhatPlugin } from 'hardhat/types/plugins';
 
 const plugin: HardhatPlugin = definePlugin({
   id: pkg.name!,
