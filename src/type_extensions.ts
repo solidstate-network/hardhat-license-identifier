@@ -1,4 +1,4 @@
-import {
+import type {
   LicenseIdentifierConfig,
   LicenseIdentifierUserConfig,
 } from './types.js';
